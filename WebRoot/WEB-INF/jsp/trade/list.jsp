@@ -65,7 +65,7 @@
 			{ name : 'id', 			 label:'ID',	width : 100, sortable : false,hidden:true },
 			{ name : 'name', 		 label:'名称',	width : 100, sortable : true,
 				formatter:function(value,option,rowObj){
-					var detail_name = "<a href='javascript:TradeListPage.children(\""+rowObj.codeid+"\",\""+value+"\");'>"+value+"</a>";
+					var detail_name = "<a href=\"javascript:TradeListPage.update('"+rowObj.id+"');\">"+value+"</a>";
 					return detail_name;
 				} 
 			},
@@ -86,6 +86,10 @@
 	
 	TradeListPage.logsListGridOpts.preview = function(id){
 		window.open("http://localhost${ctx}/trade/showTradeInfo.do?tradeId="+id);
+	};
+	
+	TradeListPage.update = function(id){
+		Venus.load("#main","${ctx }/trade/gotoModify.do?id="+id);
 	};
 	
 	

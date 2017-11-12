@@ -105,16 +105,18 @@ TradePage.uploadImg = function(obj){
 		});
 	};
 	
-TradePage.viewImg = function(){
-	var imgpath = jQuery("input[name='appManager.imgpath']").val();
-	if(isNull(imgpath) || imgpath.indexOf("browser") > 0){
+TradePage.viewImg = function(obj){
+	var index=$(obj).attr("imgIndex");
+	var imgid = $("input[name='trade_imgpath_"+index+"']").val();
+	var img_base = $("input[name='trade_img_base_"+index+"']").val();
+	if(imgid==""){
 		bootbox.dialog({
-			message: "<img style=\"width:50px;height:50px\" src=\""+ctx+"/resources/foura/images/web/resmanager/browser.png?_="+new Date().getTime()+"\">",
+			message: "<img style=\"width:400px;height:400px\" src=\""+ctx+"/resources/foura/images/web/resmanager/browser.png?_="+new Date().getTime()+"\">",
 			size:'small',
 			title:Venus.i18nMsg("m_resmanager_js_preImg_default"),//默认图标
 			buttons: {
 				main: {
-					label: Venus.i18nMsg("m_resmanager_js_preImg_close"),//关闭
+					label: "关闭",//关闭
 					className: "btn-closed",
 					callback: function() {
 						return true;
@@ -125,12 +127,12 @@ TradePage.viewImg = function(){
 	}else{
 		bootbox.dialog({
 			//message: "<img style=\"width:50px;height:50px\" src=\""+ctx+""+imgpath+"?_="+new Date().getTime()+"\">",
-			message: "<img style=\"width:50px;height:50px\" src=\""+ctx+"/sysfile/outputCacheFile.do?moduleid=appManager&id="+imgpath+"&_t="+new Date().getTime()+"\">",
+			message: "<img style=\"width:400px;height:400px\" src=\"data:image/png;base64,"+img_base+"\">",
 			size:'small',
-			title:Venus.i18nMsg("m_resmanager_js_preImg_custom"),//自定义图标
+			title:"图片预览",//自定义图标
 			buttons: {
 				main: {
-					label: Venus.i18nMsg("m_resmanager_js_preImg_close"),//关闭
+					label: "关闭",//关闭
 					className: "btn-closed",
 					callback: function() {
 						return true;

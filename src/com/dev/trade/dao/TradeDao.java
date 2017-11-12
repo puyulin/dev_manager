@@ -20,4 +20,6 @@ public interface TradeDao {
 	
 	public List<Map<String, Object>> queryImages(String trade_id);
 	
+	public Map<String, Object> queryImageById(String tradeFileId);
+	
 }

@@ -43,6 +43,13 @@ public class TradeController extends BaseController{
 		
 		return "/trade/update";
 	}
+	@RequestMapping("/gotoModify")
+	public String gotoModify(){
+		String tradeid = getParameter("id");
+		Map<String, Object> queryTradeDetail = tradeService.queryTradeDetail(tradeid);
+		setAttribuate("detailMap",queryTradeDetail);
+		return "/trade/update";
+	}
 	
 	@RequestMapping("/upImg")
     @ResponseBody
@@ -155,5 +162,13 @@ public class TradeController extends BaseController{
 		List<String> asList = Arrays.asList(msizeArray);
 		setAttribuate("asList", asList);
 		return "/trade/trade_module_1";
+	}
+	
+	@RequestMapping("/imgBase64")
+	@ResponseBody
+	public String imgBase64(){
+		String tradeFileId = getParameter("id");
+		String imgBase64 = tradeService.queryImgBase64(tradeFileId);
+		return "data:image/png;base64,"+imgBase64;
 	}
 }

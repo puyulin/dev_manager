@@ -11,49 +11,49 @@
 
 				<form id="form_save_id" style="display: inline-block">
 
-					<input id="name" name="name" type="text" autocomplete="off" class="form-widget-venus"
+					<input id="name" name="name" value="${detailMap.name }" type="text" autocomplete="off" class="form-widget-venus"
 						data-venus="{
                       'label':'商品名称',
                       'colNum':'col-sm-4',
                       'errMsgColNum':'col-sm-2'}" maxlength="50"/>
-					<input id="code" name="code" type="text" autocomplete="off" class="form-widget-venus"
+					<input id="code" name="code" vallue="${detailMap.code }" type="text" autocomplete="off" class="form-widget-venus"
 						data-venus="{
                       'label':'商品编号',
                       'colNum':'col-sm-4',
                       'errMsgColNum':'col-sm-2'}" maxlength="50"/>
-					<input id="brand" name="brand" type="text" autocomplete="off" class="form-widget-venus"
+					<input id="brand" name="brand" value="${detailMap.brand }" type="text" autocomplete="off" class="form-widget-venus"
 						data-venus="{
                       'label':'品牌',
                       'colNum':'col-sm-4',
                       'errMsgColNum':'col-sm-2'}" />
-					<input id="price" name="price" type="text"  class="form-widget-venus"
+					<input id="price" name="price" value="${detailMap.price }" type="text"  class="form-widget-venus"
 						data-venus="{
                       'label':'商品价格￥',
                       'colNum':'col-sm-4',
                       'errMsgColNum':'col-sm-2'}" />
-					<input name="MS" type="text" class="form-widget-venus"
+					<input name="MS" type="text" value="${detailMap.ms }" class="form-widget-venus"
 						data-venus="{
                       'label':'商品材质',
                       'colNum':'col-sm-4',
                       'errMsgColNum':'col-sm-2'}" />
-                    <input id="msize" type="text" name="msize"  class="form-widget-venus " 
+                    <input id="msize" type="text" name="msize" value="${detailMap.msize }"  class="form-widget-venus " 
 	                	data-venus="{
 	                      'label':'商品尺寸',
 	                     'colNum':'col-sm-4',
                       'errMsgColNum':'col-sm-2'}" />
-					<input id="wxcode" name="wxcode" type="text" class="form-widget-venus"
+					<input id="wxcode" name="wxcode" type="text"  value="${detailMap.wxcode }" class="form-widget-venus"
 						data-venus="{
                       'label':'咨询微信号',
                       'colNum':'col-sm-4',
                       'errMsgColNum':'col-sm-2'}" />
-                    <input id="email" name="email" type="text" class="form-widget-venus"
+                    <input id="email" name="email" type="text" value="${detailMap.email }" class="form-widget-venus"
 						data-venus="{
                       'label':'咨询邮箱',
                       'colNum':'col-sm-4',
                       'errMsgColNum':'col-sm-2'}" />
                       
                     <!-- 图片地址 -->
-	                <input id="img_path_1" imgIndex="1" name="file" type="file" class="form-widget-venus" 
+	                <input id="img_path_1" imgIndex="1" name="file" type="file" class="form-widget-venus"
 						data-venus="{
 	                     'label':'图片地址1',
 					  	 'disable':false,
@@ -61,7 +61,7 @@
 	                     'errMsgColNum':'col-sm-4',
 	                     'uploadCallback':'TradePage.uploadImg',
 	                     'previewCallback':'TradePage.viewImg'}" />
-	                     <!-- 图片地址 -->
+	                <!-- 图片地址 -->
 	                <input id="img_path_2" imgIndex="2" name="file" type="file" class="form-widget-venus"
 						data-venus="{
 	                     'label':'图片地址2',
@@ -95,11 +95,17 @@
 	                     'errMsgColNum':'col-sm-4',
 	                     'uploadCallback':'TradePage.uploadImg',
 	                     'previewCallback':'TradePage.viewImg'}" />
-	                 <input type="hidden" name="trade_imgpath_1">
-	                 <input type="hidden" name="trade_imgpath_2">
-	                 <input type="hidden" name="trade_imgpath_3">
-	                 <input type="hidden" name="trade_imgpath_4">
-	                 <input type="hidden" name="trade_imgpath_5">
+	                 <c:set value="${detailMap.imgs}" var="imgList"/>
+	                 <input type="hidden" name="trade_imgpath_1" <c:if test="${fn:length(imgList)>0 }">value=${imgList[0].id}</c:if> >
+	                 
+	                 <c:if test="${fn:length(imgList)>0 }"><input name="trade_img_base_1" type="hidden" value="${(imgList[0]).bs64}"></c:if>
+	                 
+	                 <input type="hidden" name="trade_imgpath_2" <c:if test="${fn:length(imgList)>1 }">value=${imgList[1].id}</c:if> >
+	                 <c:if test="${fn:length(imgList)>0 }"><input name="trade_img_base_2" type="hidden" value="${(imgList[1]).bs64}"></c:if>
+	                 
+	                 <input type="hidden" name="trade_imgpath_3" <c:if test="${fn:length(imgList)>2 }">value=${imgList[2].id}</c:if> >
+	                 <input type="hidden" name="trade_imgpath_4" <c:if test="${fn:length(imgList)>3 }">value=${imgList[3].id}</c:if> >
+	                 <input type="hidden" name="trade_imgpath_5" <c:if test="${fn:length(imgList)>4 }">value=${imgList[4].id}</c:if> >
 				</form>
 			</div>
 			<!-- /.widget-body -->
@@ -119,7 +125,6 @@
 
 <script type="text/javascript">
 	var ctx = "${ctx}";
-	
 	
 /* 
 	TradePage.addErrorMsg = function(input,errormsg){

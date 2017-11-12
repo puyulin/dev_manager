@@ -32,4 +32,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="queryImages" parameterType="java.lang.String" resultType="java.util.Map">
     	select * from t_trade_base_r_file t1 left join t_dev_file t2 on t1.img_id=t2.id where t1.base_id = #{_parameter}
     </select>
+    
+      <select id="queryImageById" parameterType="java.lang.String" resultType="java.util.Map">
+    	select * from t_trade_base_r_file t1 left join t_dev_file t2 on t1.img_id=t2.id where t1.id = #{_parameter}
+    </select>
+    
+    
 </mapper>

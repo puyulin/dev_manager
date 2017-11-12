@@ -51,4 +51,12 @@ public class TradeService {
 		detailMap.put("imgs", imageList);
 		return detailMap;
 	}
+	
+	public String queryImgBase64(String tradeFileId){
+		
+		Map<String, Object> tradeImgFileMap = tradeDao.queryImageById(tradeFileId);
+		byte[] bys = (byte[])tradeImgFileMap.get("content");
+		String img_bs = Base64Utils.encodeToString(bys);
+		return img_bs;
+	}
 }
