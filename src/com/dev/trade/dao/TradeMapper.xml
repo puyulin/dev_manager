@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.trade.dao.TradeDao">
+    <insert id="insertTradeBase" parameterType="java.util.Map" >
+		insert into t_trade_base(`id`,`name`,`code`,`brand`,`price`,`ms`,`msize`,`wxcode`,`email`) 
+			values(#{id},#{name},#{code},#{brand},#{price},#{ms},#{msize},#{wxcode},#{email});
+    </insert>
+    
+    <insert id="insertTradeImgs" parameterType="java.util.List">
+    	insert into t_trade_base_r_file (id, base_id,img_id)  
+    		values
+        <foreach collection ="list" item="item" index= "index" separator =",">
+          (
+          #{item.id}, #{item.baseid}, #{item.imgid}
+          )
+        </foreach>
+    </insert>
+    
+    <select id="queryList" parameterType="page" resultType="java.util.Map">
+    	select * from t_trade_base where 1=1
+    	<if test="queryObject.blurQueryField != null and queryObject.blurQueryField != '' ">
+        	AND name like CONCAT('%',#{queryObject.blurQueryField},'%')
+        </if>
+    </select>
+    
+    <select id="queryDetail" parameterType="java.lang.String" resultType="java.util.Map">
+    	select * from t_trade_base where id=#{_parameter}
+    </select>
+    
+    <select id="queryImages" parameterType="java.lang.String" resultType="java.util.Map">
+    	select * from t_trade_base_r_file t1 left join t_dev_file t2 on t1.img_id=t2.id where t1.base_id = #{_parameter}
+    </select>
+</mapper>

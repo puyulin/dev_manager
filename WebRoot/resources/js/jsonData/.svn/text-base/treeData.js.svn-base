@@ -1,0 +1,20 @@
+var LOCALJSONDATA = {};
+LOCALJSONDATA.treeData = [
+			{ "id" : "6", "menuNo" : "6", "parentNo" : "1", "menuUrl" : null, "name" : "权限管理",
+				"icon" : null, "isvisible" : "1", "isleaf" : "0", "menuOrder" : 1,
+				"description" : null, "parentName" : null },
+			{ "id" : "3", "menuNo" : "3", "parentNo" : "6", "menuUrl" : "auth/role/listPage.do",
+				"name" : "角色管理", "icon" : null, "isvisible" : "1", "isleaf" : "1", "menuOrder" : 1,
+				"description" : null, "parentName" : null },
+			{ "id" : "4", "menuNo" : "4", "parentNo" : "6", "menuUrl" : "auth/menu/listPage.do",
+				"name" : "菜单管理", "icon" : null, "isvisible" : "1", "isleaf" : "1", "menuOrder" : 2,
+				"description" : null, "parentName" : null },
+			{ "id" : "5", "menuNo" : "5", "parentNo" : "6", "menuUrl" : "auth/user/listPage.do",
+				"name" : "用户管理", "icon" : null, "isvisible" : "1", "isleaf" : "1", "menuOrder" : 3,
+				"description" : null, "parentName" : null },
+			{ "id" : "2", "menuNo" : "2", "parentNo" : "-1", "menuUrl" : null, "name" : "日志分析",
+				"icon" : null, "isvisible" : "1", "isleaf" : "0", "menuOrder" : 2,
+				"description" : null, "parentName" : null },
+			{ "id" : "1", "menuNo" : "1", "parentNo" : "-1", "menuUrl" : null, "name" : "系统管理",
+				"icon" : null, "isvisible" : "1", "isleaf" : "0", "menuOrder" : 1,
+				"description" : null, "parentName" : null } ];

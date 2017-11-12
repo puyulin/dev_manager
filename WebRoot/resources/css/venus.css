@@ -1,0 +1,397 @@
+/************************ select disabled ********************************/
+select:disabled+div{
+	opacity:1!important;
+}
+select:disabled+div>a {
+    background-color: #eee!important;
+    cursor: not-allowed!important;
+}
+select:disabled+div>a:focus {
+	outline:none;
+}
+/************************让文件域显示路劲**************************/
+.show-file-path:after{
+	content:attr(data-path) !important;
+}
+/************************模糊/高级查询转换开关**********************/
+input[type=checkbox].ace.ace-switch.search-switch+.lbl:before {
+    content: "模糊查询\a0\a0\a0\a0高级查询";
+    width: 82px;
+    text-indent: 5px;
+
+    height: 34px;
+    line-height: 34px;
+}
+input[type=checkbox].ace.ace-switch.search-switch:checked+.lbl:before {
+    content: "模糊查询\a0\a0\a0\a0高级查询";
+    width: 82px;
+    text-indent: -33px;
+    height: 34px;
+    line-height: 34px;
+}
+input[type=checkbox].ace.ace-switch.search-switch+.lbl:after {
+    left:60px;
+    height: 30px;
+    line-height: 30px;
+}
+input[type=checkbox].ace.ace-switch.search-switch:checked+.lbl:after {
+    left: 2px;
+    height: 30px;
+    line-height: 30px;
+}
+/************************页面布局间隙**start************************/
+.page-content{
+	padding-left:10px;
+	padding-right:10px;
+}
+#center{
+	margin-left:0px;
+}
+#left,#right{
+	padding-left:0px;
+	padding-right:10px
+}
+/************************页面布局间隙**end************************/
+h4.smaller{
+	font-size: 14px;
+}
+.radio-container,
+.checkbox-container {
+  width: 100%;
+  border: 1px solid #d5d5d5;
+  line-height: 32px;
+  padding-top:2px;
+  height: 34px;
+  display:table;
+}
+.radio-container label,
+.checkbox-container label{
+	padding-top:5px;
+	margin-bottom:5px;
+}
+.widget-container span.input-icon{
+	display: table;
+}
+.input-group .help-button{
+  display: inline-block;
+  float: right;
+  position: absolute;
+  right: -23px;
+  margin-top: 5px;
+}
+.validationError {
+  border-color: red !important;
+  color:red;
+  padding-top:5px;
+}
+.error-container .validationError {
+  padding: 10px;
+  border: 1px solid red;
+  border-radius: 4px;
+  color: red;
+  background-color: #FAFAFA;
+}
+.nav-header li{
+	float:left;
+	border-width: 0 1px;
+	border-color: #e5e5e5;
+}
+.marginl-10{
+	margin-left:10px;
+}
+.queryForm{
+	display: inline;
+}
+.breadcrumbs .nav-header li.active>a:after{
+	border-right-color: #fff !important;
+}
+.error-msg{
+	margin-bottom:10px;
+}
+.required-start{
+	color:red;
+	font-weight:bold;
+}
+.input-group-addon+.input-group-addon{
+	border-left:0px;
+}
+.input-icon+.input-group-addon{
+	border-left:0px;
+}
+/*******************************重写按钮样式 （带水波效果）**********************************/
+button {
+  display: block;
+  cursor: pointer;
+  overflow: hidden;
+  height:40px;
+  border:0px !important;
+  box-shadow:0px 0px 0px #eee;
+  user-select: none;
+}
+.btn:focus{
+	outline-width: 0px !important;
+}
+.ripple {
+  position: absolute;
+  background: rgba(0,0,0,.15);
+  border-radius: 100%;
+  transform: scale(0);
+  pointer-events: none;
+}
+.ripple.show {
+  animation: ripple .75s ease-out;
+}
+@keyframes ripple {
+  to {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+/*********************表格头部按钮**********************************************/
+.grid-title-btns-venus{
+	display: none;
+}
+.btn-spliter{
+	height:40px;
+	border-right:1px solid #6E9FCA;
+	width:0px;
+	float:left;
+}
+/***********************重写单元格高度**************************************/
+.ui-jqgrid tr.jqgrow td{
+	height:30px;
+}
+.ui-jqgrid .ui-jqgrid-htable th{
+	height:35px;
+}
+/***********************单元格样式**************************************/
+td{
+	text-overflow: ellipsis;
+}
+/***********************重写分页控件样式**************************************/
+.ui-jqgrid .ui-jqgrid-pager{
+	height:45px;
+}
+.ui-jqgrid .ui-pager-control{
+	height:40px;
+}
+.ui-jqgrid-pager td{
+	width:33%;
+}
+/*********************复选框附加按钮点击时的篮框去掉******************************/
+.btn-additional,
+.btn-additional.active:focus,
+.btn-additional:active:focus,
+.btn-additional:focus {
+    outline: none;
+    background-color:transparent!important;
+    border-color:transparent!important;
+}
+/*********************页面路劲标题**********************************/
+.dirTitle{
+	padding-left:10px;
+}
+.dirTitle span+span:before {
+    content: '>';
+    margin: 0px 10px;
+}
+/******************Form 控件 label operation ****************************/
+.input-group-addon-operation{
+	width: 10px;
+	padding: 0px;
+	border-right:0px;
+}
+.input-group-addon-operation button{
+	height:100%;
+	background: transparent;
+}
+/***********************JGrid start*************/
+.ui-jqgrid-bdiv table{
+	border-left: none !important;
+}
+.table-container{
+	border-left:1px solid #E1E1E1;
+	border-right:1px solid #E1E1E1;
+}
+/***********************JGrid end*************/
+/***********************JQuery Chose start*************/
+.chosen-container-single .chosen-single{
+	height:34px !important;
+	line-height:34px !important;
+	border-color:#D5D5D5 !important;
+}
+.chosen-container-multi .chosen-choices{
+	min-height:32px !important;
+	line-height:32px !important;
+	border-color:#D5D5D5 !important;
+}
+.chosen-container-multi .chosen-choices li.search-choice{
+	margin-top:6px !important;
+}
+/***********************JQuery Chose end*************/
+/***********************BootStrap dialog start*************/
+.dialog-body-venus{
+	display:flex;
+}
+.dialog-content{
+	display:none;
+}
+/***********************BootStrap dialog end*************/
+/*防止时间控件被遮盖*/
+.bootstrap-timepicker-widget{
+	z-index:99999;
+}
+/**********************查询后面的折叠按钮高度*************/
+.btn-search-collapse{
+	border-bottom-width:9px;
+}
+.widget-box-search .widget-header{
+	border-bottom-width:0px !important;
+	padding-left:0px !important;
+	padding-right:10px !important;
+}
+.widget-box-search .widget-body{
+	padding-right:10px !important;
+}
+.widget-box-search{
+	border-bottom:1px solid #F3F3F3 !important;
+}
+/* .scroll-content{
+	overflow-x:auto;
+} */
+
+/**********************遮罩层*************/
+.loading-div{
+	width: 2000px;
+    height: 2000px;
+    background-color: gray;
+    z-index: 999999999999;
+    position: absolute;
+    opacity: 0.5;
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+}
+.loading{
+	position: absolute;
+    z-index: 999999999999999;
+    color: #07122B;
+    height:80px;
+    width:80px;
+    background-image: url("../images/loading.gif");
+}
+/*****************上传文件控件***********************/
+.ace-file-container{
+	height: 35px !important;
+}
+.remove{
+	background-color: gray !important;
+}
+.remove i{
+	padding-top: 2px;
+}
+.ace-file-input .ace-file-container:before{
+	    background-color: transparent !important;
+}
+.ace-file-input .ace-file-container.selected .ace-file-name .ace-icon {
+    background-color: transparent;
+    color: gray;
+    padding-top: 4px;
+}
+.ace-file-input .ace-file-container.selected {
+    right: 0px
+}
+.ace-file-input .ace-file-container .ace-file-name {
+	max-width: 99%;
+	padding-left: 25px;
+    padding-top: 3px;
+}
+/**********************统一边距**************************/
+.marginl{
+	margin-left:10px;
+}
+
+a.btn.btn-primary.btn-app.no-radius.marginl.marginb {}
+.marginr{
+	margin-right:10px;
+}
+.marginb{
+	margin-bottom:10px;
+}
+.margint{
+	margin-top:10px;
+}
+.marginl-10{
+	margin-left:10px;
+}
+.marginr-10{
+	margin-right:10px;
+}
+.marginb-10{
+	margin-bottom:10px;
+}
+.margint-10{
+	margin-top:10px;
+}
+/*************************详情样式************************/
+
+.detail-info {
+    display: table;
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid #DCEBF7
+}
+.detail-info-item{
+	margin:0px;
+	padding:0px;
+}
+.detail-info-label {
+    text-align: right;
+    padding: 6px 10px 6px 4px;
+    font-weight: 400;
+    color: #667E99;
+    background-color: transparent;
+    border-top: 1px dotted #D5E4F1;
+    display: table-cell;
+    width: 120px;
+    max-width:120px;
+    min-width:120px;
+    vertical-align: middle;
+    color: #336199;
+    background-color: #EDF3F4;
+    border-top: 1px solid #F7FBFF;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.detail-info-text {
+    display: table-cell;
+    padding: 6px 4px 6px 6px;
+    border-bottom: 1px dotted #D5E4F1;
+    padding-left: 12px;
+    width:100%;
+    WORD-BREAK: break-all;
+    WORD-WRAP: break-word;
+}
+
+
+.detail-info-text>span+span:before {
+    display: inline;
+    content: ",";
+    margin-left: 1px;
+    margin-right: 3px;
+    color: #666;
+    border-bottom: 1px solid #FFF
+}
+
+.detail-info-item:first-child .detail-info-label,
+.detail-info-item:first-child .detail-info-text {
+    border-top: none;
+}
+
+/****************************************************/
+
+/***************指定Venus.confirm()的宽度***************/
+.modal-dialog {
+    width:600px!important;
+    margin:auto!important;
+}

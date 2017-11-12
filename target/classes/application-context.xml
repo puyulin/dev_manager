@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd	
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+	<mvc:annotation-driven />
+
+	<!-- 扫描控制器类 -->
+
+	<!-- <bean name="springConfigTool" class="com.yggdrasill.framework.util.SpringConfigTool"></bean> -->
+	<context:component-scan base-package="com.dev" />
+	<!-- <context:component-scan base-package="com.venustech" /> -->
+	<!-- 配置静态资源 -->
+	
+	<!-- mvc启动挂载，放置在application-context中，导致代理失效 -->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+	<!-- jsp视图解析器 -->
+	<bean id="jspViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+
+	</bean>
+
+	<!-- <bean id="exceptionResolver" class="com.venustech.auth.resolver.MyExceptionResolver"></bean> -->
+	<!-- 上传拦截，如最大上传值及最小上传值 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize">
+			<!-- 200M -->
+			<value>209715200</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>4096</value>
+		</property>
+		<property name="defaultEncoding">
+			<value>utf-8</value>
+		</property>
+	</bean>
+	<!-- 注册Spring监听器 -->
+	<!-- <bean id="applicationEventListener" class="com.yggdrasill.foura.web.common.listener.ApplicationEventListener"></bean> -->
+	
+	<!-- <context:property-placeholder location="classpath:jdbc.properties" />  
+	  
+	    创建jdbc数据源  
+	    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"  
+	        destroy-method="close">  
+	        <property name="driverClassName" value="${driver}" />  
+	        <property name="url" value="${url}" />  
+	        <property name="username" value="${username}" />  
+	        <property name="password" value="${password}" />  
+	    </bean>  
+	  
+	    (事务管理)transaction manager, use JtaTransactionManager for global tx  
+	    <bean id="transactionManager"  
+	        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+	        <property name="dataSource" ref="dataSource" />  
+	    </bean>  
+	  
+	    创建SqlSessionFactory，同时指定数据源  
+	    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+	        <property name="dataSource" ref="dataSource" />
+	        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	        <property name="mapperLocations" value="classpath:com/dev/*/dao/*.xml"></property>  
+	    </bean>  
+	    
+	    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+			<property name="annotationClass" value="org.springframework.stereotype.Repository" />
+			<property name="basePackage" value="com.dev.**.dao" />
+			<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />  
+	    </bean>   -->
+</beans>
+
+

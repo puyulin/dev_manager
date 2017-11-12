@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.data.dao.LocationDataDao">
+    <select id="queryList" parameterType="java.util.Map" resultType="java.util.Map">
+        select * from areainfo where 1=1
+        <if test="pid != null and pid != '' ">
+        	AND parentid = #{pid}
+        </if>
+        <if test="pid == null || pid == '' ">
+        	AND parentid is null
+        </if>
+        <if test="blurQueryField != null and blurQueryField != '' ">
+        	AND (name like CONCAT('%',#{blurQueryField},'%') or codeid like CONCAT('%',#{blurQueryField},'%'))
+        </if>
+       </select>
+</mapper>
