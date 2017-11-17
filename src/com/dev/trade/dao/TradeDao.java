@@ -12,6 +12,10 @@ public interface TradeDao {
 
 	public void insertTradeBase(Map<String, Object> dataMap);
 	
+	public Integer updateTrade(Map<String, Object> dataMap);
+	
+	public Integer deleteTrade(String tradeId);
+	
 	public void insertTradeImgs(List<Map<String, String>> imgList);
 	
 	public List<Map<String, Object>> queryList(Pager p);
@@ -21,5 +25,7 @@ public interface TradeDao {
 	public List<Map<String, Object>> queryImages(String trade_id);
 	
 	public Map<String, Object> queryImageById(String tradeFileId);
+	
+	public Integer deleteImgs(List<String> imgIds);
 	
 }

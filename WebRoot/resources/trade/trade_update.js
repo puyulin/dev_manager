@@ -89,7 +89,9 @@ TradePage.uploadImg = function(obj){
 					bootbox.alert("上传成功!");//"上传成功!"
 					if($("input[name='trade_imgpath_"+index+"']")){
 						var imgid = result["imgid"];
+						var base64 = result["base64"];
 						$("input[name='trade_imgpath_"+index+"']").val(imgid);//修改为数据库二进制流存储
+						$("input[name='trade_img_base_"+index+"']").val(base64);//修改新的二进制图片文件
 					}
 					
 				}else{
@@ -98,7 +100,6 @@ TradePage.uploadImg = function(obj){
 			},
 			error: function (data, status, e)
 			{	
-				debugger;
 				jQuery(obj).removeAttr("disabled");
 				bootbox.alert("系统错误，请稍后重试！");//"系统错误，请稍后重试！"
 			}
@@ -111,9 +112,9 @@ TradePage.viewImg = function(obj){
 	var img_base = $("input[name='trade_img_base_"+index+"']").val();
 	if(imgid==""){
 		bootbox.dialog({
-			message: "<img style=\"width:400px;height:400px\" src=\""+ctx+"/resources/foura/images/web/resmanager/browser.png?_="+new Date().getTime()+"\">",
+			message: "找不到上传文件",
 			size:'small',
-			title:Venus.i18nMsg("m_resmanager_js_preImg_default"),//默认图标
+			title:"预览失败",//默认图标
 			buttons: {
 				main: {
 					label: "关闭",//关闭

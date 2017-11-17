@@ -4,9 +4,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dev.trade.dao.TradeDao">
     <insert id="insertTradeBase" parameterType="java.util.Map" >
-		insert into t_trade_base(`id`,`name`,`code`,`brand`,`price`,`ms`,`msize`,`wxcode`,`email`) 
-			values(#{id},#{name},#{code},#{brand},#{price},#{ms},#{msize},#{wxcode},#{email});
+		insert into t_trade_base(`id`,`name`,`code`,`brand`,`price`,`ms`,`msize`,`wxcode`,`email`,`status`) 
+			values(#{id},#{name},#{code},#{brand},#{price},#{ms},#{msize},#{wxcode},#{email},'1');
     </insert>
+    
+    <update id="updateTrade" parameterType="java.util.Map">
+    	update t_trade_base set name=#{name},code=#{code},brand=#{brand},price=#{price},ms=#{ms},msize=#{msize},wxcode=#{wxcode},email=#{email} where id=#{id}
+    </update>
+    
+    <update id="deleteTrade" parameterType="java.lang.String">
+    	update t_trade_base set status='0' where id=#{_parameter}
+    </update>
     
     <insert id="insertTradeImgs" parameterType="java.util.List">
     	insert into t_trade_base_r_file (id, base_id,img_id)  
@@ -19,23 +27,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
     
     <select id="queryList" parameterType="page" resultType="java.util.Map">
-    	select * from t_trade_base where 1=1
+    	select * from t_trade_base where  status != '0'
     	<if test="queryObject.blurQueryField != null and queryObject.blurQueryField != '' ">
         	AND name like CONCAT('%',#{queryObject.blurQueryField},'%')
         </if>
     </select>
     
     <select id="queryDetail" parameterType="java.lang.String" resultType="java.util.Map">
-    	select * from t_trade_base where id=#{_parameter}
+    	select * from t_trade_base where id=#{_parameter} and status != '0'
     </select>
     
     <select id="queryImages" parameterType="java.lang.String" resultType="java.util.Map">
-    	select * from t_trade_base_r_file t1 left join t_dev_file t2 on t1.img_id=t2.id where t1.base_id = #{_parameter}
+    	select t1.id as id,
+			t1.base_id as base_id,
+			t1.img_id,
+			t2.id as fileid,
+			t2.content,
+			t2.extend,
+			t2.`status`,
+			t2.moduleid from t_trade_base_r_file t1 left join t_dev_file t2 on t1.img_id=t2.id where t1.base_id = #{_parameter}
     </select>
     
-      <select id="queryImageById" parameterType="java.lang.String" resultType="java.util.Map">
+    <select id="queryImageById" parameterType="java.lang.String" resultType="java.util.Map">
     	select * from t_trade_base_r_file t1 left join t_dev_file t2 on t1.img_id=t2.id where t1.id = #{_parameter}
     </select>
+   
+    
+    <delete id="deleteImgs" parameterType="java.util.List">
+    	delete from t_dev_file where id in 
+		<foreach item="id" collection="list" open="(" close=")" separator=",">
+        #{id}
+	    </foreach>
+    </delete>
     
     
 </mapper>

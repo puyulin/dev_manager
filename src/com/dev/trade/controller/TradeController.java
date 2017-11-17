@@ -15,12 +15,14 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Base64Utils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSON;
 import com.dev.freamarker.controller.BaseController;
 import com.dev.freamarker.pager.Pager;
 import com.dev.freamarker.service.FileService;
@@ -48,6 +50,7 @@ public class TradeController extends BaseController{
 		String tradeid = getParameter("id");
 		Map<String, Object> queryTradeDetail = tradeService.queryTradeDetail(tradeid);
 		setAttribuate("detailMap",queryTradeDetail);
+		System.out.println(queryTradeDetail.get("code"));
 		return "/trade/update";
 	}
 	
@@ -70,14 +73,14 @@ public class TradeController extends BaseController{
         	if (fileName != null && (".jpg".equals(suffix) || ".png".equals(suffix) || ".gif".equals(suffix)
                     || ".jpeg".equals(suffix))) {
                 // 处理图片
-        		String imgid = null;
         		if(index.equals("5")){
-        			imgid = fileService.uploadFile(file, "trade_content", null);
+        			result = fileService.uploadFile(file, "trade_content", null);
         		}else{
-        			imgid = fileService.uploadFile(file, "trade_head", null);
+        			result = fileService.uploadFile(file, "trade_head", null);
         		}
                 result.put("resultType", "SUCCESS");
-                result.put("imgid", imgid);
+                result.put("imgid", result.get("id"));
+                result.put("base64",result.get("content"));
                 // result.put("path", IMGPATH+imgname);
             } else {
                 result.put("resultType", "ERROR");
@@ -93,6 +96,7 @@ public class TradeController extends BaseController{
 	@RequestMapping("/save")
 	@ResponseBody
 	public Map<String, Object> save(){
+		String detailId = getParameter("detailId");
 		String name = getParameter("name");//名称
 		String code = getParameter("code");//编号
 		String brand = getParameter("brand");//品牌
@@ -123,6 +127,7 @@ public class TradeController extends BaseController{
 		if(StringUtils.isNotBlank(img5)){
 			imgids.add(img5);
 		}
+		dataMap.put("id", detailId);
 		dataMap.put("name", name);
 		dataMap.put("code", code);
 		dataMap.put("brand", brand);
@@ -131,9 +136,29 @@ public class TradeController extends BaseController{
 		dataMap.put("msize", msize);
 		dataMap.put("wxcode", wxcode);
 		dataMap.put("email", email);
-		tradeService.insertTradeBase(dataMap,imgids);
+		if(StringUtils.isNotBlank(detailId)){
+			tradeService.updateTradeBase(dataMap, imgids);
+		}else{
+			tradeService.insertTradeBase(dataMap,imgids);
+		}
 		Map<String, Object> result = new HashMap<String,Object>();
 		result.put(IS_SUCCESS, true);
+		return result;
+	}
+	
+	/**
+	 * 删除
+	 */
+	@RequestMapping("/deleteByIds")
+	@ResponseBody
+	public JSONObject delete(){
+		String tradeIds = getParameter("tradeIds");
+		String[] tradeIdSplit = StringUtils.split(tradeIds, ",");
+		for (String tradeId : tradeIdSplit) {
+			tradeService.deleteTrade(tradeId);
+		}
+		JSONObject result = new JSONObject();
+		result.put(RESULT_KEY, IS_SUCCESS);
 		return result;
 	}
 	

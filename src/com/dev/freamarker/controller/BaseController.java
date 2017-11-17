@@ -34,6 +34,7 @@ public class BaseController  {
 	@SuppressWarnings("unused")
 	private HttpServletResponse response;
 	
+	public String RESULT_KEY = "resultType";
 	public String IS_SUCCESS = "isSuccess";
 	
 	/**

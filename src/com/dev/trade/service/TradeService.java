@@ -36,6 +36,55 @@ public class TradeService {
 		tradeDao.insertTradeBase(dataMap);
 	}
 	
+	/***
+	 * 
+	 * @param dataMap
+	 * @param imgIds  文件ID
+	 */
+	public void updateTradeBase(Map<String, Object> dataMap,List<String> imgIds){
+		List<Map<String, Object>> imageList = tradeDao.queryImages(dataMap.get("id").toString());
+		List<String> deleteImgIds = new ArrayList<String>();
+		for (Map<String, Object> imgMap : imageList) {
+			String imgId = imgMap.get("fileid").toString();
+			if(!imgIds.contains(imgId)){
+				deleteImgIds.add(imgId);
+			}else{
+				imgIds.remove(imgId);
+			}
+		}
+		
+		//修改商品基础信息
+		tradeDao.updateTrade(dataMap);
+		
+		List<Map<String,String>> imgList = new ArrayList<Map<String, String>>();
+		String tradeId = dataMap.get("id").toString();
+		//新增图片
+		for (String imgid : imgIds) {
+			Map<String,String> imgMap = new HashMap<String,String>();
+			imgMap.put("id", UUID.randomUUID().toString());
+			imgMap.put("imgid", imgid);
+			imgMap.put("baseid", tradeId);
+			imgList.add(imgMap);
+		}
+		tradeDao.insertTradeImgs(imgList);
+		//数据库设置为级联删除，直接删除文件记录即可
+		tradeDao.deleteImgs(deleteImgIds);
+		
+	}
+	
+	public void deleteTrade(String tradeId){
+		List<Map<String,Object>> queryImages = tradeDao.queryImages(tradeId);
+		List<String> imgIds = new ArrayList<String>();//文件Id
+		for (Map<String, Object> map : queryImages) {
+			imgIds.add(map.get("fileid").toString());
+		}
+		//商品和图片中间表做了级联删除设置
+		if(!imgIds.isEmpty()){
+			tradeDao.deleteImgs(imgIds);
+		}
+		tradeDao.deleteTrade(tradeId);
+	}
+	
 	public List<Map<String, Object>> queryList(Pager p){
 		return tradeDao.queryList(p);
 	}

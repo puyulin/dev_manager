@@ -10,13 +10,14 @@
 			<div class="panel-body">
 
 				<form id="form_save_id" style="display: inline-block">
-
+					<input type="hidden" value="${detailMap.id}" name="detailId">
+					
 					<input id="name" name="name" value="${detailMap.name }" type="text" autocomplete="off" class="form-widget-venus"
 						data-venus="{
                       'label':'商品名称',
                       'colNum':'col-sm-4',
                       'errMsgColNum':'col-sm-2'}" maxlength="50"/>
-					<input id="code" name="code" vallue="${detailMap.code }" type="text" autocomplete="off" class="form-widget-venus"
+					<input id="code" name="code" value="${detailMap.code }" type="text" autocomplete="off" class="form-widget-venus"
 						data-venus="{
                       'label':'商品编号',
                       'colNum':'col-sm-4',

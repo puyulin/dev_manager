@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf8"%>
 <%@ include file="/common.jsp" %>
 
-	<form id="location_search" class="query-form-venus" data-target="res_table" onsubmit="return false;"
+	<form id="location_search" class="query-form-venus" data-target="trade_table" onsubmit="return false;"
 		data-venus="{
 			'blurPlaceholder':'商品名称，商品型号'
 		}"
@@ -30,21 +30,21 @@
                  </select> --%>
 	</form>
 <!-- ----------------------------------------------------CONTROL------------------------------------------------------ -->
-<!-- <div class="grid-title-btns-venus" data-target="res_table">
-		<button class="btn-icon-add" id="resmanager_add" href="javascript:void(0);">
-			刷新
-		</button>
-</div> -->
+<div class="grid-title-btns-venus" data-target="trade_table">
+	<button class="btn-icon-del" onclick="javascript:TradeListPage.delTrade()" >
+		删除
+	</button>
+</div>
 <div class="space-4"></div>
 
 <!-- ----------------------------------------------------TABLE------------------------------------------------------ -->
-<div class="table-container table-venus" id="res_table"
+<div class="table-container table-venus" id="trade_table"
 	data-venus="{
 		'options':'TradeListPage.logsListGridOpts'}"></div>
 
 
-<%-- <form action="${ctx}/resManager/deleteByIds.do" id="delForm" style="display: none;"></form>
-<form action="${ctx}/resManager/exportSysresList.do?nodeId=${nodeId}" method="post" id="exportForm" style="display: none;"></form> --%>
+<form action="${ctx}/trade/deleteByIds.do" id="delForm" style="display: none;"></form>
+<%-- <form action="${ctx}/resManager/exportSysresList.do?nodeId=${nodeId}" method="post" id="exportForm" style="display: none;"></form> --%>
 
 
 <script type="text/javascript">
@@ -55,8 +55,8 @@
 		caption : '商品列表',
 		shrinkToFit:true,
 		shrinkHeight:true,
-		//multiselect:true,
-		//multiboxonly:false,
+		multiselect:true,
+		multiboxonly:false,
 		//pager:null,
 		rownumbers:true,
 		relativeSelectId:"thisTableSelect",
@@ -79,7 +79,7 @@
 			}
 		],
 		loadComplete:function(){
-			$("#res_table").find("th:nth-child(2)").css("cssText","text-align:center!important");
+			$("#trade_table").find("th:nth-child(2)").css("cssText","text-align:center!important");
 		} 
 	};
 		
@@ -91,6 +91,39 @@
 	TradeListPage.update = function(id){
 		Venus.load("#main","${ctx }/trade/gotoModify.do?id="+id);
 	};
+	
+	TradeListPage.delTrade = function(){
+		  var s = jQuery("#trade_table").find("table[id^=jqid_]").jqGrid('getGridParam', 'selarrrow');
+		    if(s.length==0){
+		    	Venus.alert("请选择删除的商品!");
+		    	return false;
+		    }
+		    Venus.confirm("是否确定删除商品",function(){
+			    $("#delForm").empty();
+			    $("#delForm").append("<input type='hidden'  value='"+s+"' name='tradeIds'/>");
+			    $.ajax({
+			    	url:"${ctx}/trade/deleteByIds.do",
+			    	data:$("#delForm").serialize(),
+			    	type:"POST",
+			    	dataType:"json",
+			    	async: true,
+			    	success:function(data){
+			    		 if(data.resultType=="isSuccess"){
+			    			Venus.alert("操作成功","删除商品成功","success");
+			    			TradeListPage.search();
+			    		}else{
+			    			bootbox.alert(data.msg);
+			    			TradeListPage.search();
+			    		}
+			    	}
+			    });
+		    });
+	};
+	TradeListPage.search = function(){
+		//$("#res_searchFrom").find("button:last").click();
+		Venus.load("#main","${ctx }/trade/list.do");
+	};
+	
 	
 	
 </script>

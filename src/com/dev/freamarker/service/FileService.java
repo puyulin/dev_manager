@@ -11,7 +11,10 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONObject;
+
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dev.freamarker.dao.FileDao;
@@ -21,7 +24,8 @@ public class FileService {
 
 	@Resource FileDao fileDao;
 	
-	public String uploadFile(MultipartFile file,String moduleid,String extend) throws IOException{
+	public JSONObject uploadFile(MultipartFile file,String moduleid,String extend) throws IOException{
+		JSONObject result = new JSONObject();
 		InputStream is = file.getInputStream();
 		ByteArrayOutputStream bAOutputStream = new ByteArrayOutputStream();
 		String id = null;
@@ -34,6 +38,8 @@ public class FileService {
 			bAOutputStream.close();
 			is.close();
 			id = saveFileSteam(data, moduleid, extend);
+			result.put("content", Base64Utils.encodeToString(data));
+			result.put("id", id);
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
@@ -44,8 +50,7 @@ public class FileService {
 				bAOutputStream.close();
 			}
 		}
-		
-		return id;
+		return result;
 	} 
 	
 	public String saveFileSteam(byte[] data,String moduleid,String extend){
